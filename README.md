@@ -1,0 +1,8 @@
+# DEPENDENCIES
+
+Spring Web WEB
+
+PostgreSQL Driver SQL
+
+JDBC API SQL
+
