@@ -4,7 +4,7 @@ public class ProductDetail {
     private int id;
     private String name;
     private String maturity_date;
-    private String interest_rate;
+    private double interest_rate;
 
     public int getId() {
         return id;
@@ -30,11 +30,11 @@ public class ProductDetail {
         this.maturity_date = maturity_date;
     }
 
-    public String getInterest_rate() {
+    public double getInterest_rate() {
         return interest_rate;
     }
 
-    public void setInterest_rate(String interest_rate) {
+    public void setInterest_rate(double interest_rate) {
         this.interest_rate = interest_rate;
     }
 }

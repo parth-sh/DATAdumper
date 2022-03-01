@@ -5,12 +5,6 @@ public class ProductPricePerDay {
     private Double price;
     private int id;
 
-    public ProductPricePerDay(String date, Double price, int id) {
-        this.date = date;
-        this.price = price;
-        this.id = id;
-    }
-
     public String getDate() {
         return date;
     }

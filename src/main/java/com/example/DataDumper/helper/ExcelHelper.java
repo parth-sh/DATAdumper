@@ -1,6 +1,7 @@
 package com.example.DataDumper.helper;
 
 import com.example.DataDumper.entity.ProductDetail;
+import com.example.DataDumper.entity.ProductPricePerDay;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -21,7 +22,7 @@ public class ExcelHelper {
         List<ProductDetail> list = new ArrayList<>();
         try {
             XSSFWorkbook workbook = new XSSFWorkbook(is);
-            XSSFSheet sheet = workbook.getSheet("Prices Per Day");
+            XSSFSheet sheet = workbook.getSheet("Product Details");
             int row_number = 0;
             Iterator iterator = sheet.iterator();
             while (iterator.hasNext()) {
@@ -47,7 +48,7 @@ public class ExcelHelper {
                             productDetail.setMaturity_date(cell.getStringCellValue());
                             break;
                         case 3:
-                            productDetail.setInterest_rate(cell.getStringCellValue());
+                            productDetail.setInterest_rate(cell.getNumericCellValue());
                             break;
                         default:
                             break;
@@ -55,6 +56,48 @@ public class ExcelHelper {
                     cid++;
                 }
                 list.add(productDetail);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public static List<ProductPricePerDay> convertExcelToListOfProductPricePerDay(InputStream is) {
+        List<ProductPricePerDay> list = new ArrayList<>();
+        try {
+            XSSFWorkbook workbook = new XSSFWorkbook(is);
+            XSSFSheet sheet = workbook.getSheet("Prices Per Day");
+            int row_number = 0;
+            Iterator iterator = sheet.iterator();
+            while (iterator.hasNext()) {
+                Row row = (Row) iterator.next();
+                if (row_number == 0) {
+                    row_number++;
+                    continue;
+                }
+
+                Iterator<Cell> cells = row.iterator();
+                int cid = 0;
+                ProductPricePerDay productPricePerDay = new ProductPricePerDay();
+                while (cells.hasNext()) {
+                    Cell cell = cells.next();
+                    switch (cid) {
+                        case 0:
+                            productPricePerDay.setDate(cell.getStringCellValue());
+                            break;
+                        case 1:
+                            productPricePerDay.setPrice(cell.getNumericCellValue());
+                            break;
+                        case 2:
+                            productPricePerDay.setId((int) cell.getNumericCellValue());
+                            break;
+                        default:
+                            break;
+                    }
+                    cid++;
+                }
+                list.add(productPricePerDay);
             }
         } catch (Exception e) {
             e.printStackTrace();
