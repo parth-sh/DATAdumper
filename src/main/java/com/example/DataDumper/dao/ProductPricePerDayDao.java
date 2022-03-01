@@ -1,5 +1,6 @@
 package com.example.DataDumper.dao;
 
+import com.example.DataDumper.entity.ProductPricePerDay;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -20,5 +21,13 @@ public class ProductPricePerDayDao {
                 "";
         int update = this.jdbcTemplate.update(query);
         System.out.println("Price History table update: " + update);
+    }
+
+    public void insertData(ProductPricePerDay productPricePerDay) {
+        var query = "" +
+                "INSERT INTO price_history(date,price,id) VALUES(?,?,?)";
+        int update = this.jdbcTemplate.update(
+                query, productPricePerDay.getDate().toString(), productPricePerDay.getPrice(), productPricePerDay.getId()
+        );
     }
 }
