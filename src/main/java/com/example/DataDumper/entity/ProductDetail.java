@@ -37,4 +37,14 @@ public class ProductDetail {
     public void setInterest_rate(double interest_rate) {
         this.interest_rate = interest_rate;
     }
+
+    @Override
+    public String toString() {
+        return "ProductDetail{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", maturity_date='" + maturity_date + '\'' +
+                ", interest_rate=" + interest_rate +
+                '}';
+    }
 }

@@ -28,4 +28,13 @@ public class ProductPricePerDay {
     public void setId(int id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "ProductPricePerDay{" +
+                "date='" + date + '\'' +
+                ", price=" + price +
+                ", id=" + id +
+                '}';
+    }
 }
