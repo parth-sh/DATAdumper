@@ -9,7 +9,10 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -64,6 +67,20 @@ public class ExcelHelper {
         return list;
     }
 
+    private static boolean isValidFormat(String format, String value) {
+        Date date = null;
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat(format);
+            date = sdf.parse(value);
+            if (!value.equals(sdf.format(date))) {
+                date = null;
+            }
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+        return date != null;
+    }
+
     public static List<ProductPricePerDay> convertExcelToListOfProductPricePerDay(InputStream is) {
         List<ProductPricePerDay> list = new ArrayList<>();
         try {
@@ -85,7 +102,19 @@ public class ExcelHelper {
                     Cell cell = cells.next();
                     switch (cid) {
                         case 0:
-                            productPricePerDay.setDate(cell.getDateCellValue());
+                            try {
+                                productPricePerDay.setDate(cell.getDateCellValue());
+                            } catch (Exception e) {
+                                String date = cell.getStringCellValue();
+                                if (isValidFormat("dd-MMM-yyyy", date)) {
+                                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+                                    productPricePerDay.setDate(dateFormat.parse(date));
+                                }
+                                if (isValidFormat("dd/mm/yy", date)) {
+                                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yy");
+                                    productPricePerDay.setDate(dateFormat.parse(date));
+                                }
+                            }
                             break;
                         case 1:
                             productPricePerDay.setPrice(cell.getNumericCellValue());
@@ -101,7 +130,7 @@ public class ExcelHelper {
                 list.add(productPricePerDay);
             }
         } catch (Exception e) {
-//            e.printStackTrace();
+            e.printStackTrace();
         }
         return list;
     }
