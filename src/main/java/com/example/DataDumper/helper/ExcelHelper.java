@@ -48,17 +48,18 @@ public class ExcelHelper {
                             productDetail.setMaturity_date(cell.getStringCellValue());
                             break;
                         case 3:
-                            productDetail.setInterest_rate(cell.getNumericCellValue());
+                            productDetail.setInterest_rate(cell.getNumericCellValue() * 100);
                             break;
                         default:
                             break;
                     }
                     cid++;
                 }
+                if (productDetail.getId() == 0) break;
                 list.add(productDetail);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         return list;
     }
@@ -84,7 +85,7 @@ public class ExcelHelper {
                     Cell cell = cells.next();
                     switch (cid) {
                         case 0:
-                            productPricePerDay.setDate(cell.getStringCellValue());
+                            productPricePerDay.setDate(cell.getDateCellValue());
                             break;
                         case 1:
                             productPricePerDay.setPrice(cell.getNumericCellValue());
@@ -100,7 +101,7 @@ public class ExcelHelper {
                 list.add(productPricePerDay);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         return list;
     }

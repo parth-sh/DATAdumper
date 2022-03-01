@@ -1,15 +1,17 @@
 package com.example.DataDumper.entity;
 
+import java.util.Date;
+
 public class ProductPricePerDay {
-    private String date;
+    private Date date;
     private Double price;
     private int id;
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
