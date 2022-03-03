@@ -3,6 +3,7 @@ package com.example.DataDumper.helper;
 import com.example.DataDumper.entity.ProductDetail;
 import com.example.DataDumper.entity.ProductPricePerDay;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -62,23 +63,9 @@ public class ExcelHelper {
                 list.add(productDetail);
             }
         } catch (Exception e) {
-//            e.printStackTrace();
+            e.printStackTrace();
         }
         return list;
-    }
-
-    private static boolean isValidFormat(String format, String value) {
-        Date date = null;
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat(format);
-            date = sdf.parse(value);
-            if (!value.equals(sdf.format(date))) {
-                date = null;
-            }
-        } catch (ParseException ex) {
-            ex.printStackTrace();
-        }
-        return date != null;
     }
 
     public static List<ProductPricePerDay> convertExcelToListOfProductPricePerDay(InputStream is) {
@@ -98,21 +85,25 @@ public class ExcelHelper {
                 Iterator<Cell> cells = row.iterator();
                 int cid = 0;
                 ProductPricePerDay productPricePerDay = new ProductPricePerDay();
+                String dateValueCheck = null;
                 while (cells.hasNext()) {
                     Cell cell = cells.next();
                     switch (cid) {
                         case 0:
+                            DataFormatter formatter = new DataFormatter();
+                            String strValue = formatter.formatCellValue(cell);
+                            dateValueCheck = strValue;
+                            if (dateValueCheck == "") break;
+                            SimpleDateFormat dateFormat;
                             try {
-                                productPricePerDay.setDate(cell.getDateCellValue());
+                                dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                                productPricePerDay.setDate(dateFormat.parse(strValue));
                             } catch (Exception e) {
-                                String date = cell.getStringCellValue();
-                                if (isValidFormat("dd-MMM-yyyy", date)) {
-                                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
-                                    productPricePerDay.setDate(dateFormat.parse(date));
-                                }
-                                if (isValidFormat("dd/mm/yy", date)) {
-                                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yy");
-                                    productPricePerDay.setDate(dateFormat.parse(date));
+                                try {
+                                    dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+                                    productPricePerDay.setDate(dateFormat.parse(strValue));
+                                } catch (Exception e2) {
+                                    e2.printStackTrace();
                                 }
                             }
                             break;
@@ -127,6 +118,7 @@ public class ExcelHelper {
                     }
                     cid++;
                 }
+                if (dateValueCheck == "") break;
                 list.add(productPricePerDay);
             }
         } catch (Exception e) {
