@@ -99,7 +99,6 @@ public class ExcelHelper {
                             } catch (Exception e) {
                                 try {
                                     dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
-                                    System.out.println(dateFormat.parse(strValue));
                                     productPricePerDay.setDate(dateFormat.parse(strValue));
                                 } catch (Exception e2) {
                                     e2.printStackTrace();
