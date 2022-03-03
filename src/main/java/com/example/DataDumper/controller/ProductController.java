@@ -39,6 +39,7 @@ public class ProductController {
                 for (int i = 0; i < productPricePerDay.size(); i++) {
                     this.productPricePerDayDao.insertData(productPricePerDay.get(i));
                 }
+
                 return ResponseEntity.ok(Map.of("message", "File saved"));
             } catch (IOException e) {
                 e.printStackTrace();
@@ -48,7 +49,7 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please upload excel file");
     }
 
-    @GetMapping("/product/{id}")
+    @GetMapping("/product/{id}/price")
     public List<?> getPrices(@PathVariable("id") int id) {
         this.productPricePerDayDao.queryPriceFor3Days(id);
         return Arrays.asList();
