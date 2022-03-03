@@ -13,6 +13,7 @@ public class ProductDetailDao {
 
     public void createTable() {
         var query = "" +
+                "DROP TABLE product_details;" +
                 "CREATE TABLE IF NOT EXISTS product_details (\n" +
                 "  interest_rate DOUBLE PRECISION NOT NULL,\n" +
                 "  maturity_date varchar(450) NOT NULL,\n" +
