@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -49,10 +48,13 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please upload excel file");
     }
 
-    @GetMapping("/product/{id}/price")
-    public List<?> getPrices(@PathVariable("id") int id) {
-        this.productPricePerDayDao.queryPriceFor3Days(id);
-        return Arrays.asList();
+    @GetMapping("/product/{id}/details/{date}")
+    public List<?> getDetailsByDate(@PathVariable("id") int id, @PathVariable("date") String date) {
+        return this.productDetailDao.queryDetailByDate(id, date);
     }
 
+    @GetMapping("/product/{id}/price")
+    public List<?> getPrices(@PathVariable("id") int id) {
+        return this.productPricePerDayDao.queryPriceFor3Days(id);
+    }
 }

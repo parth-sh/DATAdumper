@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class ProductDetailDao {
 
@@ -31,5 +33,14 @@ public class ProductDetailDao {
         int update = this.jdbcTemplate.update(
                 query, productDetail.getId(), productDetail.getName(), productDetail.getMaturity_date(), productDetail.getInterest_rate()
         );
+    }
+
+    public List<?> queryDetailByDate(int id, String date) {
+        var query = "SELECT price,name,interest_rate " +
+                "FROM product_details " +
+                "INNER JOIN price_history " +
+                "ON product_details.id=price_history.id " +
+                "WHERE product_details.id='" + id + "' AND date='" + date + "';";
+        return this.jdbcTemplate.queryForList(query);
     }
 }
