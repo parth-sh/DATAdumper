@@ -6,8 +6,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
-import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class ProductPricePerDayDao {
@@ -35,16 +35,15 @@ public class ProductPricePerDayDao {
         );
     }
 
-    public void queryPriceFor3Days(int id) {
+    public List<Map<String, Object>> queryPriceFor3Days(int id) {
         var query = "" +
-                "SELECT * FROM price_history WHERE (date BETWEEN '"
+                "SELECT price FROM price_history WHERE (date BETWEEN '"
                 + LocalDate.now()
                 + "' AND '"
-                + LocalDate.now().plusDays(3)
+                + LocalDate.now().plusDays(2)
                 + "') AND (id='"
                 + id
                 + "');";
-        System.out.println(query);
-        this.jdbcTemplate.queryForObject(query, ProductPricePerDay.class);
+        return this.jdbcTemplate.queryForList(query);
     }
 }
