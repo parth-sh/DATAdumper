@@ -12,10 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class ExcelHelper {
     public static boolean checkExcelFormat(MultipartFile file) {
@@ -97,10 +94,12 @@ public class ExcelHelper {
                             SimpleDateFormat dateFormat;
                             try {
                                 dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                                productPricePerDay.setDate(dateFormat.parse(strValue));
+                                String edited_strValue = strValue.substring(0, 6) + "20" + strValue.substring(6);
+                                productPricePerDay.setDate(dateFormat.parse(edited_strValue));
                             } catch (Exception e) {
                                 try {
                                     dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+                                    System.out.println(dateFormat.parse(strValue));
                                     productPricePerDay.setDate(dateFormat.parse(strValue));
                                 } catch (Exception e2) {
                                     e2.printStackTrace();
