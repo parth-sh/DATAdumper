@@ -46,7 +46,13 @@ public class ExcelHelper {
                             productDetail.setName(cell.getStringCellValue());
                             break;
                         case 2:
-                            productDetail.setMaturity_date(cell.getStringCellValue());
+                            DataFormatter formatter = new DataFormatter();
+                            String strValue = formatter.formatCellValue(cell);
+                            if (strValue == "")
+                                break;
+                            strValue = strValue.substring(0, 2) + strValue.substring(4);
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");
+                            productDetail.setMaturity_date(dateFormat.parse(strValue));
                             break;
                         case 3:
                             productDetail.setInterest_rate(cell.getNumericCellValue() * 100);

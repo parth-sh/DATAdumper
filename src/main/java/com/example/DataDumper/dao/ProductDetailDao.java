@@ -16,7 +16,7 @@ public class ProductDetailDao {
                 "DROP TABLE product_details;" +
                 "CREATE TABLE IF NOT EXISTS product_details (\n" +
                 "  interest_rate DOUBLE PRECISION NOT NULL,\n" +
-                "  maturity_date varchar(450) NOT NULL,\n" +
+                "  maturity_date DATE NOT NULL,\n" +
                 "  name varchar(450) NOT NULL,\n" +
                 "  id integer PRIMARY KEY NOT NULL\n" +
                 ")" +

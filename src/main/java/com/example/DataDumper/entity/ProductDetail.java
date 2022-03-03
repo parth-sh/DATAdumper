@@ -1,9 +1,11 @@
 package com.example.DataDumper.entity;
 
+import java.util.Date;
+
 public class ProductDetail {
     private int id;
     private String name;
-    private String maturity_date;
+    private Date maturity_date;
     private double interest_rate;
 
     public int getId() {
@@ -22,11 +24,11 @@ public class ProductDetail {
         this.name = name;
     }
 
-    public String getMaturity_date() {
+    public Date getMaturity_date() {
         return maturity_date;
     }
 
-    public void setMaturity_date(String maturity_date) {
+    public void setMaturity_date(Date maturity_date) {
         this.maturity_date = maturity_date;
     }
 
