@@ -15,14 +15,13 @@ public class ProductDetailDao {
 
     public void createTable() {
         var query = "" +
-                "DROP TABLE product_details;" +
+                "DROP TABLE IF EXISTS product_details;" +
                 "CREATE TABLE IF NOT EXISTS product_details (\n" +
                 "  interest_rate DOUBLE PRECISION NOT NULL,\n" +
                 "  maturity_date DATE NOT NULL,\n" +
                 "  name varchar(450) NOT NULL,\n" +
                 "  id integer PRIMARY KEY NOT NULL\n" +
-                ")" +
-                "";
+                ");";
         int update = this.jdbcTemplate.update(query);
         System.out.println("Product detail table update: " + update);
     }

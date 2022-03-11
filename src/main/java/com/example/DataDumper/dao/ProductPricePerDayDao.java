@@ -17,13 +17,12 @@ public class ProductPricePerDayDao {
 
     public void createTable() {
         var query = "" +
-                "DROP TABLE price_history;" +
+                "DROP TABLE IF EXISTS price_history;" +
                 "CREATE TABLE IF NOT EXISTS price_history (\n" +
                 "  date DATE NOT NULL,\n" +
                 "  price DOUBLE PRECISION NOT NULL,\n" +
                 "  id integer NOT NULL\n" +
-                ");" +
-                "";
+                ");";
         int update = this.jdbcTemplate.update(query);
         System.out.println("Price History table update: " + update);
     }
